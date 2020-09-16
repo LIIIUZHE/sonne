@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sonne</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_pack_tag 'application' %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <header name="top">
+
+      <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
+    <a  style=" font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: 1.8rem;"class="navbar-brand custom-logo-link p-2 text-dark  "  href="/">
+              Sonne
+            </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          &nbsp;&nbsp;
+          <a href="<%= users_path %>" class="p-2 text-dark">Users</a>
+        </li>
+        <li class="nav-item">
+          &nbsp;&nbsp;
+          <% if session[:user_id] %>
+                <a href="/" class="p-2 ">
+                <%= link_to " Logout", session_path(session[:user_id]), method: 'delete'  ,class:"p-2 text-dark" %>
+                <% else %>
+                &nbsp;&nbsp;
+                <%= link_to "Login", new_session_path ,class:"p-2 text-dark"  %></li>
+                </a>
+               <% end -%>
+        </li>
+<li class="nav-item active">
+  &nbsp;&nbsp;&nbsp;&nbsp;
+        <%= link_to "Blogs", blogs_path ,class:"p-2 text-dark"  %></li>
+       
+      </ul>
+      <form class="form-inline mt-2 mt-md-0" action="<%= search_admin_users_path %>" method="get"> 
+        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="username" value="<%= params[:username] %>">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+</form>
+    </div>
+  </nav>
+
+      
+    </header>
+
+    <div class="container body-offset">
+      <br>
+      <br>
+      <% if flash[:notice] %>
+        <div class="alert alert-info"><%= flash[:notice] %></div>
+      <% end -%>
+      
+      <%= yield %>
+    </div>
+  </body>
+</html>
